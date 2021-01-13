@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>List of Guests</h1>
+{% if guests %}
+  <ul>
+    {% for guest in guests %}
+    <li>
+      {{ guest.name }} is bringing {{ guest.plus_one }}
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h3>No guests yet!</h3>
+{% endif %}
+
+{% endblock %}

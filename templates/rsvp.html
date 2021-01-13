@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+      <div class="rsvp-list">
+        <h2>Attending:</h2>
+        {% if guests %}
+          <ul>
+          {% for guest in guests %}
+
+            <li>{{guest.name}}</li>
+
+          {% endfor %}
+        </ul>
+        {% else %}
+          <h4>No guests yet!</h4>
+        {% endif %}
+      </div>
+      <form action="/guests" method="POST">
+        <label for="name">Guest Name</label>
+        <input type="text" name="name" id="name" required />
+        <label for="email">Guest's Email</label>
+        <input type="email" name="email" id="email" required />
+        <label for="plus-one">Guest's Tagalong</label>
+        <input type="text" name="plus-one" id="plus-one" />
+        <label for="phone">Guest's Phone Number</label>
+        <input type="tel" name="phone" id="phone" />
+        <input type="submit" />
+      </form>
+    </main>
+
+{% endblock %}
