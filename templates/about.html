@@ -1,6 +1,16 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} {% block content %}
 <section>
-  <h3>Fall Events Details</h3>
-  <p>The party is on {{ date }} at {{ time }}</p>
+	<h3>Events Details in {{month}}, {{year}}</h3>
+	{% if holidays%}
+	<ul>
+		{% for holiday in holidays %}
+		<li>
+			{{holiday.name}}<br />
+			{{holiday.date}}<br />
+			{{holiday.descriptions}}
+		</li>
+		{%endfor%}
+	</ul>
+	{% endif %}
 </section>
+{% endblock %}

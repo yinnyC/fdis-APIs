@@ -1,16 +1,15 @@
-"""
-Initialize your Flask app. This is what will run your server.
-
-Don't forget to install your dependencies from requirements.txt!
-This is a doc string! It's a special kind of comment that is expected
-in Python files. Usually, you use this at the top of your code and in
-every function & class to explain what the code does.
-"""
 from flask import Flask, request, render_template, url_for
 from guest import Guest
 from datetime import datetime, date
+import os
+import requests
+from datetime import date, datetime
+from pprint import PrettyPrinter
+
 
 app = Flask(__name__)
+API_KEY = os.getenv('API_KEY')
+pp = PrettyPrinter(indent=4)
 
 # Define global variables (stored here for now)
 
@@ -26,17 +25,34 @@ def homepage():
 @app.route('/about')
 def about_page():
     """Show user party information."""
-    # Sometimes, a cleaner way to pass variables to templates is to create a
-    # context dictionary, and then pass the data in by dictionary key
+    today = date.today()
+    month = today.strftime('%m')
+    year = today.strftime('%Y')
+
+    url = 'https://calendarific.com/api/v2/holidays'
+    params = {
+        'api_key': API_KEY,
+        'country': 'US',
+        'year': year,
+        'month': month
+    }
+    result_json = requests.get(url, params=params).json()
+    holidays = []
+
+    for holiday in result_json['response']['holidays']:
+        holidays.append({'name': holiday['name'],
+                         'date': holiday['date']['iso'],
+                         'descriptions': holiday['description']})
 
     context = {
-        "date": "10/31/2020",
-        "time": "10:00 pm"
+        "holidays": holidays,
+        "month": today.strftime('%B'),
+        "year": year
     }
     return render_template('about.html', **context)
 
 
-@app.route('/guests', methods=['GET', 'POST'])
+@ app.route('/guests', methods=['GET', 'POST'])
 def show_guests():
     """
     Show guests that have RSVP'd.
@@ -54,7 +70,7 @@ def show_guests():
         return render_template("guests.html", guests=guest_list)
 
 
-@app.route('/rsvp')
+@ app.route('/rsvp')
 def rsvp_guest():
     """Show form for guests to RSVP for events."""
     return render_template('rsvp.html')

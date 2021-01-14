@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Relevant Holidays</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
-        {% block head %}
-        {% endblock %}
-    </head>
-    <body>
-        <header>
-          <nav>
-            <a href="/guests">Guests</a>
-            <a href="/rsvp">RSVP</a>
-          </nav>
-        </header>
-        <main>
-            <h1><a href="/">Home</a></h1>
-            {% block content %}
-            {% endblock %}
-            <section>
-                <p>
-                    © FDIS 2020
-                </p>
-            </section>
-        </main>
-    </body>
+	<head>
+		<title>Relevant Holidays</title>
+		<link
+			rel="stylesheet"
+			href="{{url_for('static', filename='styles.css')}}"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto"
+			rel="stylesheet"
+		/>
+		{% block head %} {% endblock %}
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/about">About</a>
+				<a href="/guests">Guests</a>
+				<a href="/rsvp">RSVP</a>
+			</nav>
+		</header>
+		<main>
+			<h1><a href="/">Home</a></h1>
+			{% block content %} {% endblock %}
+			<section>
+				<p>© FDIS 2020</p>
+			</section>
+		</main>
+	</body>
 </html>
